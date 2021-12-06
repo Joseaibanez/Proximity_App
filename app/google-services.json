@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "822266809586",
+    "project_id": "fir-prueba1-e10b7",
+    "storage_bucket": "fir-prueba1-e10b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822266809586:android:3d14ef84a36f3f7eabd46b",
+        "android_client_info": {
+          "package_name": "com.example.proximidad3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822266809586-c7js4nnc32c8li1j6stgni11jfe0sn7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEACOqj7fOrBFVko-ug898Fb-OqRk9ip4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822266809586-c7js4nnc32c8li1j6stgni11jfe0sn7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

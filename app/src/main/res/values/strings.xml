@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ProximityFirebase</string>
+    <string name="botonSiguiente">Siguiente</string>
+    <string name="n_telefono">Nº Telefono</string>
+    <string name="codVerify">Código de verificación</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="botonEnviar">Enviar</string>
+    <string name="botonEnviar2">Enviar</string>
+</resources>
