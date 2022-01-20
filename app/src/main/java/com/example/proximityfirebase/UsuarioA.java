@@ -15,10 +15,11 @@ import java.util.ArrayList;
 public class UsuarioA {
 
     Circle perimetro;
+    ArrayList<LatLng> poligono;
 
     public UsuarioA() {}
 
-    public ArrayList drawPolygon(GoogleMap mapa) {
+    public void drawPolygon(GoogleMap mapa) {
         ArrayList<LatLng> polygonList = new ArrayList<>();
         LatLng point1 = new LatLng(42.621510945637574, -5.618901350675462);
         LatLng point2 = new LatLng(42.62153705584088, -5.618843056519884);
@@ -36,8 +37,10 @@ public class UsuarioA {
                         point3,
                         point4));
         polygon1.setTag("alpha");
-        return polygonList;
+        poligono = polygonList;
     }
+
+    public ArrayList<LatLng> getPoligono() {return poligono;}
 
     public Circle getCircle() {
         return perimetro;

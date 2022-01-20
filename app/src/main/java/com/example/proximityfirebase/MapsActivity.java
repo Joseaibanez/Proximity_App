@@ -34,10 +34,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private UsuarioA userA;
+    private UsuarioB userB;
 
 
     public MapsActivity() {
         userA = new UsuarioA();
+        userB = new UsuarioB(this);
     }
 
     @Override
@@ -47,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
         getPermisos();
 
@@ -64,7 +67,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -78,66 +80,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        ArrayList<LatLng> poligono = userA.drawPolygon(mMap);
         userA.drawCircle(mMap, new LatLng(42.62148265388385, -5.618857367403332), 20);
-        Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-        MediaPlayer player = MediaPlayer.create(getApplicationContext(), ringtone);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        LocationManager locationManager = (LocationManager) MapsActivity.this.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                LatLng myLoc = new LatLng(location.getLatitude(), location.getLongitude());
-                //COMPROBANDO LA PROXIMIDAD AL CIRCULO
-                googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-                    @Override
-                    public void onMyLocationChange(Location myLocation) {
-                        float[] distance = new float[2];
-                        Circle perim = userA.getCircle();
-                        Location.distanceBetween( myLocation.getLatitude(), myLocation.getLongitude(),
-                                perim.getCenter().latitude, perim.getCenter().longitude, distance);
-                        // Comprobacion area
-                        if( distance[0] < perim.getRadius() ){
-                            Vibrator vib = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                            vib.vibrate(1000);
-                        }
-
-                        //COMPROBACION POLIGONO
-                        LatLng myLocat = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                        if(PolyUtil.containsLocation(myLocat, poligono, false)) {
-                            if (!player.isPlaying()) {
-                                player.start();
-                            }
-                        }
-                        else {
-                            if (player.isPlaying()) {
-                                player.stop();
-                                try {
-                                    player.prepare();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                        //FIN POLÍGONO
-                    }
-                });
-                //FIN DE PERÍMETRO
-            }
-
-        };
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2, 1000, locListener);
+        userA.drawPolygon(mMap);
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        userB.checkLocation(mMap, userA);
     }
 }

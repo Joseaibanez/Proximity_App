@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         tNum = (EditText) findViewById(R.id.editTextNumber);
         bCod = (Button) findViewById(R.id.botonEnviarCodigo);
         tCod = (EditText) findViewById(R.id.editTextCode);
-        // Start phoneAuth
+        // Inicio de autenticación
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onCodeSent(s, forceResendingToken);
             }
         };
-        // End phoneAuth
+        // Fin de autenticacion
         bNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Autenticación con nº de telefono
+    // Verificación del nº de telefono
     public void verificarNumero(String numero) {
         fireAuth = FirebaseAuth.getInstance();
         PhoneAuthOptions options = PhoneAuthOptions.newBuilder(fireAuth)
@@ -78,10 +78,16 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+    //Fin
 
     //Boton siguiente
     public void Siguiente(View view) {
         Intent siguiente = new Intent(this, MapsActivity.class);
         startActivity(siguiente);
+    }
+    //Fin
+
+    private void registrarUsuario() {
+
     }
 }
